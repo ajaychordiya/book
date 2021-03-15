@@ -16,7 +16,7 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 
-//getting book
+//getting book api/book
 router.get("/book", async (req, res) => {
   const book = await Book.find();
   res.send(book);
@@ -27,6 +27,23 @@ router.get("/book", async (req, res) => {
 router.get("/book/:title", async (req, res) => {
   const book = await Book.find(
     { title: { $regex: req.params.title, $options: "$i" } },
+    (err) => {
+      if (err) {
+        console.log(err);
+      }
+    }
+  );
+  res.send(book);
+});
+
+router.get("/book1/:title/:city", async (req, res) => {
+  const book = await Book.find(
+    {
+      $and: [
+        { title: { $regex: req.params.title, $options: "$i" } },
+        { city: req.params.city },
+      ],
+    },
     (err) => {
       if (err) {
         console.log(err);

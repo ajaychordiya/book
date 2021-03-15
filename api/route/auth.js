@@ -63,14 +63,13 @@ router.post("/login", async (req, res) => {
 
   //create token
   const token = jwt.sign({ _id: user._id }, TOKEN_SECRET);
-  res
-    .status(200)
-    .send({
-      success: true,
-      message: "Login successfull",
-      user: user._id,
-      token: token,
-    });
+  res.status(200).send({
+    success: true,
+    message: "Login successfull",
+    user: user._id,
+    email: user.email,
+    token: token,
+  });
   //res.status(200).json({ "token": user.generateJwt() });
   //res.send("sucesss");
 });
